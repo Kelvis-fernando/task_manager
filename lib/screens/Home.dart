@@ -1,18 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:task_manager/constants/color.dart';
+import '../constants/color.dart';
+import '../models/todo.dart';
+import '../widgets/todo_item.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final todosList = ToDo.todoList();
+
     return Scaffold(
       backgroundColor: tdBGColor,
       appBar: _buildAppBar(),
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 15),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         child: Column(
-          children: [searchBox()],
+          children: [
+            searchBox(),
+            Expanded(
+              child: ListView(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(top: 50, bottom: 20),
+                    child: Text(
+                      'All Todos',
+                      style:
+                          TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                  for (ToDo todoo in todosList) ToDoItem(todo: todoo),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
